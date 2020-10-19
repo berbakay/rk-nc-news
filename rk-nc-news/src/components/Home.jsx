@@ -1,13 +1,12 @@
 import React from 'react'
+import ArticlesList from './ArticlesList'
 
-class Home extends React.Component {
-    state = {
-
-    }
-
-    render() {
-        return (<p>Home</p>)
-    }
+const Home  = () => {
+  return (
+    <div>
+        <ArticlesList />
+    </div>
+  )
 }
 
 export default Home

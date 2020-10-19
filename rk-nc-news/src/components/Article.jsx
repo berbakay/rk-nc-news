@@ -1,13 +1,8 @@
 import React from 'react'
 
-class Article extends React.Component {
-    state = {
+const ArticlePage = () => {
 
-    }
-
-    render() {
         return (<p>Article</p>)
-    }
 }
 
-export default Article
+export default ArticlePage

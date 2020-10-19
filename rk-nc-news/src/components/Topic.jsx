@@ -1,13 +1,12 @@
 import React from 'react'
+import ArticlesList from './ArticlesList'
 
-class Topic extends React.Component {
-    state = {
-
-    }
-
-    render() {
-        return (<p>{this.props.topic_slug}</p>)
-    }
+const Topic = (props) => {
+    return (
+        <div>
+            <ArticlesList topicFilter = {props.topic_slug}/>
+        </div>
+    )
 }
 
 export default Topic
