@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+
+
+header {
+  background-color: #ba1f31;
+  color: white
+}
+
+header h1 {
+  margin: 0;
+}
