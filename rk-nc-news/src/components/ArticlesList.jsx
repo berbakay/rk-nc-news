@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from '@reach/router'
+import LoadingPage from './LoadingPage';
 
 class ArticlesList extends React.Component {
     state = {
@@ -38,7 +39,7 @@ class ArticlesList extends React.Component {
 
     render() {
 
-        if(this.state.isLoading) return(<p>loading</p>)
+        if(this.state.isLoading) return(<LoadingPage />)
         return(
             <div>
             <ul id="articleList">

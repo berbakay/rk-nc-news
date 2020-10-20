@@ -1,15 +1,16 @@
 import React from 'react';
 import axios from 'axios';
 import { navigate } from '@reach/router';
+import LoadingPage from './LoadingPage';
 
 
 class SelectTopic extends React.Component {
-    state = {topics: [], topic:''};
+    state = {topics: [], topic:'', isLoading: true};
 
     componentDidMount() {
         axios.get('https://nc-news-2-electric-boogaloo.herokuapp.com/api/topics')
         .then(res => {
-            this.setState({topics: res.data.topics})
+            this.setState({isLoading: false, topics: res.data.topics})
         })
     }
 
@@ -22,6 +23,8 @@ class SelectTopic extends React.Component {
     }
 
     render () {
+        if(this.state.isLoading) return(<LoadingPage />)
+
         return(
             <div className="selectTopic">
             <label>Select Topic: </label>

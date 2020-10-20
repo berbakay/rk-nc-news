@@ -1,20 +1,25 @@
 import React from 'react'
 import axios from 'axios'
+import LoadingPage from './LoadingPage'
 
 class CommentList extends React.Component {
     state = {
         comments: [],
+        isLoading: true
     }
 
     componentDidMount() {
         axios.get(`https://nc-news-2-electric-boogaloo.herokuapp.com/api/articles/${this.props.article_id}/comments`)
         .then(res => {
             console.log(res.data)
-            this.setState({comments: res.data.comments})
+            this.setState({isLoading: false, comments: res.data.comments})
         })
     }
 
     render() {
+
+        if(this.state.isLoading) return(<LoadingPage/>)
+        
         return(<ul className="commentList">
             {this.state.comments.map(comment => {
                 return (<li key={comment.comment_id}>

@@ -1,14 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import LoadingPage from './LoadingPage';
 
 
 class SelectUser extends React.Component {
-    state = {users: [], user:''};
+    state = {users: [], user:'', isLoading: true};
 
     componentDidMount() {
         axios.get('https://nc-news-2-electric-boogaloo.herokuapp.com/api/users')
         .then(res => {
-            this.setState({users: res.data.users})
+            this.setState({isLoading: false, users: res.data.users})
         })
     }
 
@@ -18,6 +19,9 @@ class SelectUser extends React.Component {
     }
 
     render () {
+
+        if(this.state.isLoading) return(<LoadingPage />)
+
         return(
             <div className="selectUser">
             <label>Select User: </label>
