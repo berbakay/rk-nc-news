@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { Link } from '@reach/router'
 import LoadingPage from './LoadingPage';
+import { getArticles, getArticlesbyAuthor, getArticlesbyTopic } from '../apiRequests';
 
 class ArticlesList extends React.Component {
     state = {
@@ -10,42 +10,35 @@ class ArticlesList extends React.Component {
         isLoading: true
     }
 
-    getArticlesbyTopic = () => {
-        axios.get(`https://nc-news-2-electric-boogaloo.herokuapp.com/api/articles?topic=${this.props.topicFilter}`)
-        .then(res => this.setState({isLoading: false, articles: res.data.articles}));
-    }
-
-    getArticlesbyAuthor = () => {
-        axios.get(`https://nc-news-2-electric-boogaloo.herokuapp.com/api/articles?author=${this.props.username}`)
+    getThisArticlebyTopic = () => {
+        getArticlesbyTopic(this.props.topicFilter)
         .then(res => this.setState({isLoading: false, articles: res.data.articles}));
     }
 
     componentDidMount() {
         if(this.props.topicFilter) {
-            this.getArticlesbyTopic();
+            this.getThisArticlebyTopic()
         } else if (this.props.username) {
-            this.getArticlesbyAuthor();
+            getArticlesbyAuthor(this.props.username)
+            .then(res => this.setState({isLoading: false, articles: res.data.articles}));;
         } else {
-            axios.get('https://nc-news-2-electric-boogaloo.herokuapp.com/api/articles')
+            getArticles()
             .then(res => this.setState({isLoading: false, articles: res.data.articles}));
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.topicFilter !== this.props.topicFilter) {
-            this.getArticlesbyTopic();
+            this.getThisArticlebyTopic()
         }
     }
 
     render() {
-
         if(this.state.isLoading) return(<LoadingPage />)
-        return(
-            <div>
+        else return(
             <ul id="articleList">
             {this.state.articles.map(article => {
                return( 
-                
                <li key={article.article_id}>
                     <Link  to={`/articles/${article.article_id}`}>
                         <h2>{article.title}</h2>
@@ -54,12 +47,10 @@ class ArticlesList extends React.Component {
                         {article.author}
                     </Link> <span className='makeItBold'>Posted:</span> {article.created_at}</p>
                     <p><span className='makeItBold'>Votes: </span> {article.votes}</p>
-                    <p></p>
-                </li>
-                
+                    <p><span className='makeItBold'>Comments: </span> {article.comment_count}</p>
+                </li>  
             )})}
             </ul>
-            </div>
         )
     }
 

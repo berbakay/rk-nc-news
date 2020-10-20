@@ -1,6 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import LoadingPage from './LoadingPage'
+import { Link } from '@reach/router'
+import { getArticleComments } from '../apiRequests'
 
 class CommentList extends React.Component {
     state = {
@@ -9,21 +10,18 @@ class CommentList extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`https://nc-news-2-electric-boogaloo.herokuapp.com/api/articles/${this.props.article_id}/comments`)
+        getArticleComments(this.props.article_id)
         .then(res => {
-            console.log(res.data)
             this.setState({isLoading: false, comments: res.data.comments})
         })
     }
 
     render() {
-
         if(this.state.isLoading) return(<LoadingPage/>)
-        
-        return(<ul className="commentList">
+        else return(<ul className="commentList">
             {this.state.comments.map(comment => {
                 return (<li key={comment.comment_id}>
-                    <p className="makeItBold">{comment.author}</p>
+                    <p className="makeItBold"><Link to={`/users/${comment.author}`}>{comment.author}</Link></p>
                     <p><span className="makeItBold">posted:</span> {comment.created_at}</p>
                     <p><span className="makeItBold">votes:</span> {comment.votes}</p>
                     <p className="commentBody">{comment.body}</p>

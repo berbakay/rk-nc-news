@@ -1,6 +1,6 @@
 import React from 'react'
-import axios from 'axios'
 import LoadingPage from './LoadingPage';
+import { getSingleUser } from '../apiRequests';
 
 class UserInfo extends React.Component {
     state = {
@@ -9,7 +9,7 @@ class UserInfo extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`https://nc-news-2-electric-boogaloo.herokuapp.com/api/users/${this.props.username}`)
+        getSingleUser(this.props.username)
         .then(res => {
             this.setState({isLoading: false, userInfo: res.data.user[0]})
         })
