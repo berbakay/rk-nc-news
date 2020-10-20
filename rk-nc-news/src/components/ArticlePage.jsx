@@ -5,10 +5,12 @@ import CommentList from './CommentList'
 
 const ArticlePage = (props) => {
         return (
-                <div>
+                <div className='articlePage'>
                         <ArticleInfo article_id={props.article_id}/>
-                        <h2>Comments</h2>
+                        <div id="commentSection">
+                        <h3>Comments</h3>
                         <CommentList article_id={props.article_id}/>
+                        </div>
                 </div>
                 )
 }

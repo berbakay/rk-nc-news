@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from '@reach/router'
 
 class ArticleInfo extends React.Component {
     state = {
@@ -14,13 +15,11 @@ class ArticleInfo extends React.Component {
     }
 
     render() {
-        return (<div><p>{this.state.articleInfo.title}</p>
-            <p>{this.state.articleInfo.topic}</p>
-            <p>{this.state.articleInfo.author}</p>
-            <p>{this.state.articleInfo.created_at}</p>
-            <p>{this.state.articleInfo.votes}</p>
-            <p>{this.state.articleInfo.comment_count}</p>
-            <p>{this.state.articleInfo.body}</p>
+        return (<div className="articleInfo">
+            <h1>{this.state.articleInfo.title}</h1>
+            <p><span className='makeItBold'>topic: </span> {this.state.articleInfo.topic} <span className='makeItBold'>author: </span> <Link to={`/users/${this.state.articleInfo.author}`}>{this.state.articleInfo.author}</Link> <span className='makeItBold'>Posted: </span> {this.state.articleInfo.created_at}</p>
+            <p><span className='makeItBold'>votes: </span>{this.state.articleInfo.votes}<span className='makeItBold'> comments: </span>{this.state.articleInfo.comment_count}</p>
+            <p id="articleBody">{this.state.articleInfo.body}</p>
             </div>)
     }
 }

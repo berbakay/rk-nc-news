@@ -15,13 +15,13 @@ class CommentList extends React.Component {
     }
 
     render() {
-        return(<ul>
+        return(<ul className="commentList">
             {this.state.comments.map(comment => {
                 return (<li key={comment.comment_id}>
-                    <p>{comment.author}</p>
-                    <p>{comment.created_at}</p>
-                    <p>{comment.votes}</p>
-                    <p>{comment.body}</p>
+                    <p className="makeItBold">{comment.author}</p>
+                    <p><span className="makeItBold">posted:</span> {comment.created_at}</p>
+                    <p><span className="makeItBold">votes:</span> {comment.votes}</p>
+                    <p className="commentBody">{comment.body}</p>
                 </li>)
             })}
         </ul>)

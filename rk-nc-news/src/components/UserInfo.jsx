@@ -17,8 +17,8 @@ class UserInfo extends React.Component {
         return(
         <div>
             <h2>{this.state.userInfo.username}</h2>
+            <p>name: {this.state.userInfo.name}</p>
             <img src={this.state.userInfo.avatar_url} alt="user avatar"></img>
-            <p>{this.state.userInfo.name}</p>
         </div>)
     }
 }

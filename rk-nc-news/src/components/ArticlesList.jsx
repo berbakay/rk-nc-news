@@ -40,24 +40,25 @@ class ArticlesList extends React.Component {
 
         if(this.state.isLoading) return(<p>loading</p>)
         return(
-            <ul>
+            <div>
+            <ul id="articleList">
             {this.state.articles.map(article => {
                return( 
                 
                <li key={article.article_id}>
                     <Link  to={`/articles/${article.article_id}`}>
-                        <p>{article.title}</p>
+                        <h2>{article.title}</h2>
                     </Link>
-                    <p>{article.topic}</p>
-                    <Link  to={`/users/${article.author}`}>
-                        <p>{article.author}</p>
-                    </Link>
-                    <p>{article.votes}</p>
-                    <p>{article.created_at}</p>
+                    <p><span className='makeItBold'>topic:</span> {article.topic} <span className='makeItBold'>author:</span> <Link  to={`/users/${article.author}`}>
+                        {article.author}
+                    </Link> <span className='makeItBold'>Posted:</span> {article.created_at}</p>
+                    <p><span className='makeItBold'>Votes: </span> {article.votes}</p>
+                    <p></p>
                 </li>
                 
             )})}
             </ul>
+            </div>
         )
     }
 

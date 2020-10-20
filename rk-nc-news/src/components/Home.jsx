@@ -3,9 +3,7 @@ import ArticlesList from './ArticlesList'
 
 const Home  = () => {
   return (
-    <div>
         <ArticlesList />
-    </div>
   )
 }
 
