@@ -7,10 +7,19 @@ import Topic from './components/Topic';
 import ArticlePage from './components/ArticlePage';
 import UserPage from './components/UserPage';
 
-function App() {
-  return (
+class App extends React.Component {
+
+  state = {
+    currentUser: 'tickle122'
+  }
+
+  changeUser = (newUser) => {
+    this.setState({currentUser: newUser});
+  }
+
+  render() {return (
     <div className="App">
-      <Header />
+      <Header changeUser={this.changeUser}/>
       <Router>
         <Home path='/' />
         <Topic path='/topics/:topic_slug'/>
@@ -19,6 +28,7 @@ function App() {
       </Router>
     </div>
   );
+  }
 }
 
 export default App;

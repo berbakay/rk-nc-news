@@ -1,11 +1,12 @@
 import React from 'react';
 import NavBar from './NavBar'
+import { Link } from '@reach/router'
 
-const Header = () => {
+const Header = (props) => {
     return(
         <header>
-            <h1>NC-NEWS</h1>
-            <NavBar/>
+            <Link to="/"><h1>NC/NEWS</h1></Link>
+            <NavBar changeUser={props.changeUser}/>
         </header>
     )
 }

@@ -1,13 +1,56 @@
 .App {
   text-align: center;
+  font-family: sans-serif
 }
 
 
 header {
-  background-color: #ba1f31;
-  color: white
+  background-color: #202829;
+  color: white;
+  text-align: left;
+  height: 5rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.navBar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 header h1 {
-  margin: 0;
+  color: white;
+  text-decoration: none;
+  margin: auto;
+  margin-left: 0;
+  font-size: 2rem;
+  letter-spacing: 2rem;
+  width: 20%;
+}
+
+header h1:hover {
+  color: #ba1f31
+}
+
+header a {
+  height: 50%;
+  margin: auto
+}
+
+header a:link {
+  text-decoration: none;
+}
+
+header a:visited {
+  text-decoration: none;
+}
+
+.selectTopic{
+  margin: auto;
+  margin-left: 0;
+}
+
+.selectUser{
+  margin: auto;
+  margin-left: 0;
 }
