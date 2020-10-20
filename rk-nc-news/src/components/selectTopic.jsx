@@ -19,11 +19,14 @@ class SelectTopic extends React.Component {
     }
 
     handleTopicChange = (event) => {
+        this.props.changeTopic(event.target.value);
         this.setState({topic: event.target.value})
-        if(event.target.value !== 'home') {
+        if(event.target.value !== 'all') {
             const topic = event.target.value;
             navigate(`/topics/${topic}`);
-        }  
+        } else {
+            navigate('/');
+        }
     }
 
     render () {
@@ -31,10 +34,10 @@ class SelectTopic extends React.Component {
         else return(
             <div className="selectTopic">
             <label>Select Topic: </label>
-        <select value={this.state.topic} onChange={this.handleTopicChange}>
-            <option key="blank" value='home'></option>
+        <select value={this.props.topic} onChange={this.handleTopicChange}>
+            <option key="blank" value='all'>All</option>
             {this.state.topics.map(topic => {
-                return (<option  key={topic.slug} value={topic.slug}>{topic.slug}</option>)
+                return (<option key={topic.slug} value={topic.slug}>{topic.slug}</option>)
             })}
         </select>
         </div>

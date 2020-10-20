@@ -10,7 +10,12 @@ import UserPage from './components/UserPage';
 class App extends React.Component {
 
   state = {
-    currentUser: 'tickle122'
+    currentUser: 'tickle122',
+    currentTopic: 'all'
+  }
+
+  changeTopic = (newTopic) => {
+    this.setState({currentTopic: newTopic})
   }
 
   changeUser = (newUser) => {
@@ -19,7 +24,7 @@ class App extends React.Component {
 
   render() {return (
     <div className="App">
-      <Header changeUser={this.changeUser}/>
+      <Header changeTopic={this.changeTopic} topic={this.state.currentTopic} changeUser={this.changeUser}/>
       <Router>
         <Home path='/' />
         <Topic path='/topics/:topic_slug'/>

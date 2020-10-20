@@ -3,7 +3,10 @@ import ArticlesList from './ArticlesList'
 
 const Home  = () => {
   return (
-        <ArticlesList />
+    <div>
+      <h1>All Topics</h1>
+      <ArticlesList />
+    </div>
   )
 }
 

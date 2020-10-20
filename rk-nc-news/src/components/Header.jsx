@@ -5,8 +5,8 @@ import { Link } from '@reach/router'
 const Header = (props) => {
     return(
         <header>
-            <Link to="/"><h1>NC/NEWS</h1></Link>
-            <NavBar changeUser={props.changeUser}/>
+            <Link to="/"><h1 onClick={() => (props.changeTopic('all'))}>NC/NEWS</h1></Link>
+            <NavBar changeUser={props.changeUser} topic={props.topic} changeTopic ={props.changeTopic}/>
         </header>
     )
 }
