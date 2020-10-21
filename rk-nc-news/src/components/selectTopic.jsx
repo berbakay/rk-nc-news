@@ -35,10 +35,12 @@ class SelectTopic extends React.Component {
             <div className="selectTopic">
             <label>Select Topic: </label>
         <select value={this.props.topic} onChange={this.handleTopicChange}>
+            <optgroup label="Select Topic">
             <option key="blank" value='all'>All</option>
             {this.state.topics.map(topic => {
                 return (<option key={topic.slug} value={topic.slug}>{topic.slug}</option>)
             })}
+            </optgroup>
         </select>
         </div>
         )

@@ -27,7 +27,7 @@ class App extends React.Component {
       <Header changeTopic={this.changeTopic} topic={this.state.currentTopic} changeUser={this.changeUser}/>
       <Router>
         <Home path='/' />
-        <Topic path='/topics/:topic_slug'/>
+        <Topic path='/topics/:topic_slug' changeTopic={this.changeTopic}/>
         <ArticlePage path='/articles/:article_id'/>
         <UserPage path='/users/:username'/>
       </Router>

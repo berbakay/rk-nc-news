@@ -11,11 +11,17 @@ class ArticlesList extends React.Component {
     }
 
     getThisArticlebyTopic = () => {
+        this.setState({isLoading: true});
         getArticlesbyTopic(this.props.topicFilter)
         .then(res => this.setState({isLoading: false, articles: res.data.articles}));
     }
 
+    
+
     componentDidMount() {
+        if(this.props.topicFilter) {
+            this.props.changeTopic(this.props.topicFilter)
+        }
         if(this.props.topicFilter) {
             this.getThisArticlebyTopic()
         } else if (this.props.username) {
@@ -40,9 +46,11 @@ class ArticlesList extends React.Component {
             {this.state.articles.map(article => {
                return( 
                <li key={article.article_id}>
-                    <Link  to={`/articles/${article.article_id}`}>
-                        <h2>{article.title}</h2>
-                    </Link>
+                    <h2 className="articleTitle">
+                        <Link  to={`/articles/${article.article_id}`}>
+                            {article.title}
+                        </Link>
+                    </h2>
                     <p><span className='makeItBold'>topic:</span> {article.topic} <span className='makeItBold'>author:</span> <Link  to={`/users/${article.author}`}>
                         {article.author}
                     </Link> <span className='makeItBold'>Posted:</span> {article.created_at}</p>
