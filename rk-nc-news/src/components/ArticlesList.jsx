@@ -7,7 +7,10 @@ class ArticlesList extends React.Component {
     state = {
         articles: [],
         slug: '',
-        isLoading: true
+        isLoading: true,
+        showArticles: false,
+        sortQuery: 'created_at',
+        sortOrder: 'desc'
     }
  
     componentDidMount() {
@@ -17,24 +20,39 @@ class ArticlesList extends React.Component {
         if(this.props.topicFilter) {
             this.getThisArticlebyTopic()
         } else if (this.props.username) {
-            getArticlesbyAuthor(this.props.username)
+            getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder)
             .then(res => this.setState({isLoading: false, articles: res.data.articles}));;
         } else {
-            getArticles()
-            .then(res => this.setState({isLoading: false, articles: res.data.articles}));
+            getArticles(this.state.sortQuery, this.state.sortOrder)
+            .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}));
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.topicFilter !== this.props.topicFilter) {
-            this.getThisArticlebyTopic()
+        if(!this.props.topicFilter && !this.props.username) {
+            if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
+                getArticles(this.state.sortQuery, this.state.sortOrder)
+                .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+            }
+        }
+        if(this.props.topicFilter) {
+            if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) { 
+                getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder)
+                .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+            }
+        }
+        if(this.props.username) {
+            if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
+                getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder)
+                .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+            }
         }
     }
 
     getThisArticlebyTopic = () => {
         this.setState({isLoading: true});
-        getArticlesbyTopic(this.props.topicFilter)
-        .then(res => this.setState({isLoading: false, articles: res.data.articles}));
+        getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder)
+        .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}));
     }
 
     changeArticleVote = (article_id, incrementVote) => {
@@ -50,14 +68,35 @@ class ArticlesList extends React.Component {
         this.setState({articles: newArticles})
     }
 
+    toggleHide = () => {
+        this.setState({showArticles: !this.state.showArticles})
+    }
+
+    toggleSort = (sortQuery) => {
+        if(this.state.sortOrder === 'desc') {
+            this.setState({ sortQuery, sortOrder: 'asc' });
+        } else {
+            this.setState({ sortQuery, sortOrder: 'desc' });
+        }
+        
+    }
+
     render() {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
+            <div>
+            {this.props.username ? <button onClick={this.toggleHide}>{this.state.showArticles ? "Hide" : "Show"}</button> : null}
+            {this.state.showArticles && <div>
+                <label>Sort By: </label>
+            <button onClick={() => this.toggleSort('votes')}>Votes{this.state.sortQuery === 'votes' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
+            <button onClick={() => this.toggleSort('created_at')}>Date Posted {this.state.sortQuery === 'created_at' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
             <ul id="articleList">
             {this.state.articles.map(article => {
                return <ArticleCard changeArticleVote={this.changeArticleVote} key={article.article_id} articleInfo={article}/> 
             })}
             </ul>
+            </div>}
+            </div>
         )
     }
 

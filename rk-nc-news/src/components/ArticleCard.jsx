@@ -6,12 +6,10 @@ const ArticleCard = (props) => {
     const article = props.articleInfo
 
     const handleVote = (incrementVote) => {
-
         patchArticle(article.article_id, incrementVote)
         .then(() => {
             props.changeArticleVote(article.article_id, incrementVote);
         })
-        
     }
 
     return (
