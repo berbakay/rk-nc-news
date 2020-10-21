@@ -9,16 +9,16 @@ header {
   color: white
 }
 
-.navBar a:link {
+header a:link {
   color: white;
   text-decoration: none;
 }
 
-.navBar a:visited {
+header a:visited {
   color: white
 }
 
-.navBar a:hover {
+header a:hover {
   color: red
 }
 

@@ -35,3 +35,11 @@ export function getUsers() {
 export function getSingleUser(username) {
     return instance.get(`/users/${username}`)
 }
+
+export function patchArticle(article_id, incrementVote) {
+    return instance.patch(`/articles/${article_id}`, {inc_votes: incrementVote})
+}
+
+export function patchComment(comment_id, incrementVote) {
+    return instance.patch(`/comments/${comment_id}`, {inc_votes: incrementVote})
+}
