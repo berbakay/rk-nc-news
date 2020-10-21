@@ -2,6 +2,7 @@ import React from 'react'
 import LoadingPage from './LoadingPage'
 import { Link } from '@reach/router'
 import { getArticleComments } from '../apiRequests'
+import CommentCard from './CommentCard'
 
 class CommentList extends React.Component {
     state = {
@@ -20,12 +21,7 @@ class CommentList extends React.Component {
         if(this.state.isLoading) return(<LoadingPage/>)
         else return(<ul className="commentList">
             {this.state.comments.map(comment => {
-                return (<li key={comment.comment_id}>
-                    <p className="makeItBold"><Link to={`/users/${comment.author}`}>{comment.author}</Link></p>
-                    <p><span className="makeItBold">posted:</span> {comment.created_at}</p>
-                    <p><span className="makeItBold">votes:</span> {comment.votes}</p>
-                    <p className="commentBody">{comment.body}</p>
-                </li>)
+                return <CommentCard commentInfo = {comment}/>
             })}
         </ul>)
     }
