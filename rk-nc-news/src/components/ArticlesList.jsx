@@ -29,24 +29,33 @@ class ArticlesList extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(!this.props.topicFilter && !this.props.username) {
-            if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
-                getArticles(this.state.sortQuery, this.state.sortOrder)
-                .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+        
+            if(!this.props.topicFilter && !this.props.username) {
+                if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
+                    this.setState({isLoading: true}, () => {
+                        getArticles(this.state.sortQuery, this.state.sortOrder)
+                        .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+                    })
+                }
+            
             }
-        }
-        if(this.props.topicFilter) {
-            if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) { 
-                getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder)
-                .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+            if(this.props.topicFilter) {
+                if(this.props.topicFilter !== prevProps.topicFilter || prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) { 
+                    this.setState({isLoading: true}, () => {
+                    getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder)
+                    .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+                    })
+                }
             }
-        }
-        if(this.props.username) {
-            if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
-                getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder)
-                .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+            if(this.props.username) {
+                if(this.props.username !== prevProps.username || prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
+                    this.setState({isLoading: true}, () => {
+                    getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder)
+                    .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
+                    })
+                }
             }
-        }
+            
     }
 
     getThisArticlebyTopic = () => {

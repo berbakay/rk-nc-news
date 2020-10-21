@@ -17,17 +17,16 @@ class ArticleInfo extends React.Component {
         })
     }
 
-    changeArticleVote = (article_id, incrementVote) => {
-       
-    }
-
     handleVote = (incrementVote) => {
-        patchArticle(this.state.articleInfo.article_id, incrementVote)
-        .then(() => {
-            const newArticleInfo = {...this.state.articleInfo};
-            newArticleInfo.votes = this.state.articleInfo.votes + incrementVote;
-            this.setState({articleInfo: newArticleInfo})
-        }) 
+        this.setState({isLoading: true}, () => {
+            patchArticle(this.state.articleInfo.article_id, incrementVote)
+            .then(() => {
+                const newArticleInfo = {...this.state.articleInfo};
+                newArticleInfo.votes = this.state.articleInfo.votes + incrementVote;
+                this.setState({articleInfo: newArticleInfo, isLoading: false})
+            }) 
+        })
+        
     }
 
     render() {

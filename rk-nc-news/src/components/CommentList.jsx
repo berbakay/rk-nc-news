@@ -21,11 +21,14 @@ class CommentList extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
-            getArticleComments(this.props.article_id, this.state.sortQuery, this.state.sortOrder)
-            .then(res => this.setState({isLoading: false, comments: res.data.comments}))
+            this.setState({isLoading: true}, () => {
+                getArticleComments(this.props.article_id, this.state.sortQuery, this.state.sortOrder)
+                .then(res => this.setState({isLoading: false, comments: res.data.comments}))
+            })   
     }}
 
     changeCommentVote = (comment_id, incrementVote) => {
+        this.setState({isLoading: true}, () => {
         const newComments = this.state.comments.map(comment => {
             const newComment = {...comment}
             if(comment.comment_id === comment_id) {
@@ -35,7 +38,8 @@ class CommentList extends React.Component {
                 return newComment
             }
         })
-        this.setState({comments: newComments})
+        this.setState({comments: newComments, isLoading: false})
+        })
     }
 
     toggleHide = () => {

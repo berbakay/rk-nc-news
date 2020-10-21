@@ -4,7 +4,10 @@ import { getUsers } from '../apiRequests';
 
 
 class SelectUser extends React.Component {
-    state = {users: [], user:'', isLoading: true};
+    state = {
+        users: [], 
+        user:'', 
+        isLoading: true};
 
     componentDidMount() {
         getUsers()
