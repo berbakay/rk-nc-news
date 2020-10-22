@@ -43,3 +43,15 @@ export function patchArticle(article_id, incrementVote) {
 export function patchComment(comment_id, incrementVote) {
     return instance.patch(`/comments/${comment_id}`, {inc_votes: incrementVote})
 }
+
+export function postArticle(articleToPost) {
+    return instance.post(`/articles`, articleToPost)
+}
+
+export function postComment(article_id, commentToPost) {
+    return instance.post(`/articles/${article_id}/comments`, commentToPost)
+}
+
+export function createUser(userToCreate) {
+    return instance.post(`/users`, userToCreate)
+}

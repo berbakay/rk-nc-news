@@ -9,7 +9,7 @@ const ArticlePage = (props) => {
                         <ArticleInfo article_id={props.article_id}/>
                         <div id="commentSection">
                         <h3>Comments</h3>
-                        <CommentList article_id={props.article_id}/>
+                        <CommentList author={props.author} article_id={props.article_id}/>
                         </div>
                 </div>
                 )
