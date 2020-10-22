@@ -11,6 +11,7 @@ class CommentList extends React.Component {
         sortQuery: 'created_at',
         sortOrder: 'desc',
         commentToPost: {username: this.props.author, body: null},
+        hasBeenDeleted: false,
         err: null
     }
 
@@ -27,10 +28,13 @@ class CommentList extends React.Component {
                 getArticleComments(this.props.article_id, this.state.sortQuery, this.state.sortOrder)
                 .then(res => this.setState({isLoading: false, comments: res.data.comments}))
             })   
+        if(this.state.hasBeenDeleted) {
+            getArticleComments(this.props.article_id, this.state.sortQuery, this.state.sortOrder)
+            .then(res => this.setState({isLoading: false, comments: res.data.comments, hasBeenDeleted: false}))
+        }
     }}
 
     changeCommentVote = (comment_id, incrementVote) => {
-        this.setState({isLoading: true}, () => {
         const newComments = this.state.comments.map(comment => {
             const newComment = {...comment}
             if(comment.comment_id === comment_id) {
@@ -41,7 +45,6 @@ class CommentList extends React.Component {
             }
         })
         this.setState({comments: newComments, isLoading: false})
-        })
     }
 
     toggleHide = () => {
@@ -64,7 +67,6 @@ class CommentList extends React.Component {
         } else {
             postComment(this.props.article_id, commentToPost)
             .then(res => {
-                console.log(res.data)
                 this.setState(() => {
                     const newComments = [...this.state.comments];
                     newComments.unshift(res.data.comment[0])
@@ -83,6 +85,19 @@ class CommentList extends React.Component {
         })
     }
 
+    deleteRefresh = (comment_id) => {
+        this.setState(() => {
+            const newComments = [...this.state.comments].filter(comment => {
+                return comment.comment_id !== comment_id
+            })
+            return({comments: newComments});
+        })
+    }
+
+    changeIsLoading = () => {
+        this.setState({isLoading: true});
+    }
+
     render() {
         if(this.state.isLoading) return(<LoadingPage/>)
         else return(
@@ -99,7 +114,7 @@ class CommentList extends React.Component {
             <button onClick={() => this.toggleSort('created_at')}>Date Posted {this.state.sortQuery === 'created_at' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
             <ul className="commentList">
                 {this.state.comments.map(comment => {
-                    return <CommentCard changeCommentVote ={this.changeCommentVote} key={comment.comment_id}commentInfo = {comment}/>
+                    return <CommentCard changeIsLoading={this.changeIsLoading} changeCommentVote ={this.changeCommentVote} key={comment.comment_id}commentInfo = {comment} deleteRefresh={this.deleteRefresh}/>
                 })}
             </ul>
             </div>}

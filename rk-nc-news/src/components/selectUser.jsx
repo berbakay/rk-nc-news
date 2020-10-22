@@ -1,6 +1,7 @@
 import React from 'react';
 import LoadingPage from './LoadingPage';
 import { getUsers } from '../apiRequests';
+import CreateUser from './CreateUser'
 
 
 class SelectUser extends React.Component {
@@ -21,6 +22,14 @@ class SelectUser extends React.Component {
         this.props.changeUser(event.target.value)
     }
 
+    updateUsers = (newUser) => {
+        this.setState(() => {
+            const newUsers = [...this.state.users];
+            newUsers.push(newUser);
+            return{users: newUsers};
+        })
+    }
+
     render () {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
@@ -31,6 +40,7 @@ class SelectUser extends React.Component {
                 return (<option  key={user.username} value={user.username}>{user.username}</option>)
             })}
         </select>
+        <CreateUser updateUsers={this.updateUsers}/>
         </div>
         )
     }

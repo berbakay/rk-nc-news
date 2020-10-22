@@ -55,3 +55,15 @@ export function postComment(article_id, commentToPost) {
 export function createUser(userToCreate) {
     return instance.post(`/users`, userToCreate)
 }
+
+export function createTopic(topicToCreate) {
+    return instance.post('/topics', topicToCreate)
+}
+
+export function deleteArticles(article_id) {
+    return instance.delete(`/articles/${article_id}`)
+}
+
+export function deleteComments(comment_id) {
+    return instance.delete(`/comments/${comment_id}`)
+}

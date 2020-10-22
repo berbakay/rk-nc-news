@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from '@reach/router'
+import { Link, navigate } from '@reach/router'
 import LoadingPage from './LoadingPage'
-import { getArticleById } from '../apiRequests'
+import { deleteArticles, getArticleById } from '../apiRequests'
 import { patchArticle } from '../apiRequests'
 
 class ArticleInfo extends React.Component {
@@ -29,6 +29,13 @@ class ArticleInfo extends React.Component {
         
     }
 
+    handleDelete = () => {
+        deleteArticles(this.props.article_id)
+        .then(() => {
+            navigate('/')
+        })
+    }
+
     render() {
         if(this.state.isLoading) return(<LoadingPage/>)
         else return (<div className="articleInfo">
@@ -37,6 +44,7 @@ class ArticleInfo extends React.Component {
             <p><span className='makeItBold'>votes: </span>{this.state.articleInfo.votes}<span className='makeItBold'> comments: </span>{this.state.articleInfo.comment_count}</p>
             <p id="articleBody">{this.state.articleInfo.body}</p>
             <button onClick={() => this.handleVote(1)}>Upvote</button><button onClick={() => this.handleVote(-1)}>Downvote</button>
+            <button onClick={this.handleDelete}>Delete</button>
             </div>)
     }
 }

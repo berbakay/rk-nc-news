@@ -87,7 +87,7 @@ class ArticlesList extends React.Component {
                 return newArticle;
             }
         })
-        this.setState({articles: newArticles})
+        this.setState({articles: newArticles, isLoading: false})
     }
 
     toggleHide = () => {
@@ -147,6 +147,10 @@ class ArticlesList extends React.Component {
         })
     }
 
+    changeIsLoading = () => {
+        this.setState({isLoading: true})
+    }
+
     render() {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
@@ -174,7 +178,7 @@ class ArticlesList extends React.Component {
             </form>}
             <ul id="articleList">
             {this.state.articles.map(article => {
-               return <ArticleCard changeArticleVote={this.changeArticleVote} key={article.article_id} articleInfo={article}/> 
+               return <ArticleCard changeArticleVote={this.changeArticleVote} key={article.article_id} articleInfo={article} changeIsLoading={this.changeIsLoading}/> 
             })}
             </ul>
             </div>}

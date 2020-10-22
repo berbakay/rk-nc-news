@@ -2,6 +2,7 @@ import React from 'react';
 import { navigate } from '@reach/router';
 import LoadingPage from './LoadingPage';
 import { getTopics } from '../apiRequests';
+import CreateTopic from './CreateTopic';
 
 
 class SelectTopic extends React.Component {
@@ -29,6 +30,14 @@ class SelectTopic extends React.Component {
         }
     }
 
+    updateTopics = (newTopic) => {
+        this.setState(() => {
+            const newTopics = [...this.state.topics];
+            newTopics.push(newTopic);
+            return{topics: newTopics};
+        })
+    }
+
     render () {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
@@ -42,6 +51,7 @@ class SelectTopic extends React.Component {
             })}
             </optgroup>
         </select>
+        <CreateTopic updateTopics={this.updateTopics}/>
         </div>
         )
     }

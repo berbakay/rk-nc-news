@@ -6,6 +6,7 @@ const ArticleCard = (props) => {
     const article = props.articleInfo
 
     const handleVote = (incrementVote) => {
+        props.changeIsLoading()
         patchArticle(article.article_id, incrementVote)
         .then(() => {
             props.changeArticleVote(article.article_id, incrementVote);
