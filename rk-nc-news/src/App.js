@@ -25,7 +25,7 @@ class App extends React.Component {
   render() {return (
     <div className="App">
       <Header changeTopic={this.changeTopic} topic={this.state.currentTopic} changeUser={this.changeUser}/>
-      <Router>
+      <Router default={false} >
         <Home author={this.state.currentUser} path='/' />
         <Topic author={this.state.currentUser} path='/topics/:topic_slug' changeTopic={this.changeTopic}/>
         <ArticlePage author={this.state.currentUser} path='/articles/:article_id'/>

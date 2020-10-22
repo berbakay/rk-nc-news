@@ -38,6 +38,7 @@ class ArticleInfo extends React.Component {
 
     render() {
         if(this.state.isLoading) return(<LoadingPage/>)
+        else if(!this.state.articleInfo) return(<p>article not found</p>)
         else return (<div className="articleInfo">
             <h1>{this.state.articleInfo.title}</h1>
             <p><span className='makeItBold'>topic: </span> {this.state.articleInfo.topic} <span className='makeItBold'>author: </span> <Link to={`/users/${this.state.articleInfo.author}`}>{this.state.articleInfo.author}</Link> <span className='makeItBold'>Posted: </span> {this.state.articleInfo.created_at}</p>

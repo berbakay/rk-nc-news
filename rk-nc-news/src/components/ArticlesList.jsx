@@ -6,6 +6,7 @@ import ArticleCard from './ArticleCard';
 class ArticlesList extends React.Component {
     state = {
         articles: [],
+        article_count: 0,
         slug: '',
         isLoading: true,
         showArticles: false,
@@ -14,7 +15,8 @@ class ArticlesList extends React.Component {
         postArticle: false,
         topics:[],
         articleToPost: {title: null, body: null, topic: null, author: this.props.author},
-        err: null
+        err: null,
+        page: 1
     }
  
     componentDidMount() {
@@ -24,11 +26,11 @@ class ArticlesList extends React.Component {
         if(this.props.topicFilter) {
             this.getThisArticlebyTopic()
         } else if (this.props.username) {
-            getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder)
-            .then(res => this.setState({isLoading: false, articles: res.data.articles}));;
+            getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder, this.state.page)
+            .then(res => this.setState({isLoading: false, articles: res.data.articles, article_count: res.data.total_count}));;
         } else {
-            getArticles(this.state.sortQuery, this.state.sortOrder)
-            .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}));
+            getArticles(this.state.sortQuery, this.state.sortOrder, this.state.page)
+            .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true,  article_count: res.data.total_count}));
         }
         getTopics().then(res => this.setState({topics: res.data.topics}))
     }
@@ -44,26 +46,26 @@ class ArticlesList extends React.Component {
             }
         
             if(!this.props.topicFilter && !this.props.username) {
-                if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
+                if(prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder || prevState.page !== this.state.page) {
                     this.setState({isLoading: true}, () => {
-                        getArticles(this.state.sortQuery, this.state.sortOrder)
+                        getArticles(this.state.sortQuery, this.state.sortOrder, this.state.page)
                         .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
                     })
                 }
             
             }
             if(this.props.topicFilter) {
-                if(this.props.topicFilter !== prevProps.topicFilter || prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) { 
+                if(this.props.topicFilter !== prevProps.topicFilter || prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder || prevState.page !== this.state.page) { 
                     this.setState({isLoading: true}, () => {
-                    getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder)
+                    getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder, this.state.page)
                     .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
                     })
                 }
             }
             if(this.props.username) {
-                if(this.props.username !== prevProps.username || prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder) {
+                if(this.props.username !== prevProps.username || prevState.sortQuery !== this.state.sortQuery || prevState.sortOrder !== this.state.sortOrder || prevState.page !== this.state.page) {
                     this.setState({isLoading: true}, () => {
-                    getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder)
+                    getArticlesbyAuthor(this.props.username, this.state.sortQuery, this.state.sortOrder, this.state.page)
                     .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}))
                     })
                 }
@@ -73,8 +75,8 @@ class ArticlesList extends React.Component {
 
     getThisArticlebyTopic = () => {
         this.setState({isLoading: true});
-        getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder)
-        .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true}));
+        getArticlesbyTopic(this.props.topicFilter, this.state.sortQuery, this.state.sortOrder, this.state.page)
+        .then(res => this.setState({isLoading: false, articles: res.data.articles, showArticles: true,  article_count: res.data.total_count}));
     }
 
     changeArticleVote = (article_id, incrementVote) => {
@@ -151,6 +153,15 @@ class ArticlesList extends React.Component {
         this.setState({isLoading: true})
     }
 
+    changePage = (increment) => {
+        const numberOfPages = Math.ceil(this.state.article_count/10)
+        if(increment === -1 && this.state.page > 1) {
+        this.setState({page: this.state.page + increment})
+        } else if (increment === 1 && this.state.page < numberOfPages) {
+            this.setState({page: this.state.page + increment})
+        }
+    }
+
     render() {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
@@ -176,11 +187,12 @@ class ArticlesList extends React.Component {
                 </select>
             <button>Submit</button>
             </form>}
-            <ul id="articleList">
+            {this.state.articles.length ? <ul id="articleList">
             {this.state.articles.map(article => {
                return <ArticleCard changeArticleVote={this.changeArticleVote} key={article.article_id} articleInfo={article} changeIsLoading={this.changeIsLoading}/> 
             })}
-            </ul>
+            </ul> : <p>No articles found. Post an article or create topic</p>}
+            <button onClick={() => {this.changePage(-1)}}>-</button>{this.state.page}<button onClick={() =>{ this.changePage(1)}}>+</button>
             </div>}
             </div>
         )

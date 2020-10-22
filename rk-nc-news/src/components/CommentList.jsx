@@ -6,8 +6,9 @@ import CommentCard from './CommentCard'
 class CommentList extends React.Component {
     state = {
         comments: [],
+        comment_count: 0,
         isLoading: true,
-        showComments: true,
+        showComments: false,
         sortQuery: 'created_at',
         sortOrder: 'desc',
         commentToPost: {username: this.props.author, body: null},

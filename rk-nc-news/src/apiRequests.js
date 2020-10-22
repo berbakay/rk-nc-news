@@ -8,16 +8,16 @@ export function getArticleById (article_id) {
     return instance.get(`/articles/${article_id}`)
 }
 
-export function getArticlesbyTopic (topic, sortQuery, order) {
-    return instance.get(`/articles?topic=${topic}&sort_by=${sortQuery}&order=${order}`)
+export function getArticlesbyTopic (topic, sortQuery, order, page) {
+    return instance.get(`/articles?topic=${topic}&sort_by=${sortQuery}&order=${order}&p=${page}`)
 }
 
-export function getArticlesbyAuthor (author, sortQuery, order) {
-    return instance.get(`/articles?author=${author}&sort_by=${sortQuery}&order=${order}`)
+export function getArticlesbyAuthor (author, sortQuery, order, page) {
+    return instance.get(`/articles?author=${author}&sort_by=${sortQuery}&order=${order}&p=${page}`)
 }
 
-export function getArticles(sortQuery, order) {
-    return instance.get(`/articles?sort_by=${sortQuery}&order=${order}`)
+export function getArticles(sortQuery, order, page) {
+    return instance.get(`/articles?sort_by=${sortQuery}&order=${order}&p=${page}`)
 }
 
 export function getArticleComments(article_id, sortQuery, order) {
