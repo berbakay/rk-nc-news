@@ -3,6 +3,7 @@ import { Link } from '@reach/router'
 import { patchArticle } from '../apiRequests';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const ArticleCard = (props) => {
     const article = props.articleInfo
@@ -29,7 +30,7 @@ const ArticleCard = (props) => {
                 {article.title}
             </Link>
         </h2>
-        <p>author: <Link  to={`/users/${article.author}`}>{article.author}</Link> </p>
+        <p><AccountCircleIcon/> <Link  to={`/users/${article.author}`}>{article.author}</Link> </p>
         <p>comments: {article.comment_count}</p> 
         <p>{article.topic}</p> 
         <p>{article.created_at}</p>
