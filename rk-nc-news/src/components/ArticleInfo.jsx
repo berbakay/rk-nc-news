@@ -6,6 +6,7 @@ import { patchArticle } from '../apiRequests';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import { dateToTimeString } from '../utils/utils'
 
 class ArticleInfo extends React.Component {
     state = {
@@ -43,10 +44,9 @@ class ArticleInfo extends React.Component {
         if(this.state.isLoading) return(<LoadingPage/>)
         else if(!this.state.articleInfo) return(<p>article not found</p>)
         else return (<div className="articleInfo">
-             <p><Link to={`/users/${this.state.articleInfo.author}`}><AccountCircleIcon/>{this.state.articleInfo.author}</Link></p>
-            <h1>{this.state.articleInfo.title}</h1>
-            <p>{this.state.articleInfo.created_at}</p>
+            <p><Link to={`/users/${this.state.articleInfo.author}`}><AccountCircleIcon/>{this.state.articleInfo.author}</Link> {dateToTimeString(this.state.articleInfo.created_at)}</p> 
             <p>votes: {this.state.articleInfo.votes} comments: {this.state.articleInfo.comment_count}</p>
+            <h1>{this.state.articleInfo.title}</h1>
             <p id="articleBody">{this.state.articleInfo.body}</p>
             <div className="articleInfoButtons">
                 <div className="voteButtons">

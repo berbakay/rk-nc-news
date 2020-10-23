@@ -4,6 +4,7 @@ import { patchArticle } from '../apiRequests';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { dateToTimeString } from '../utils/utils';
 
 const ArticleCard = (props) => {
     const article = props.articleInfo
@@ -33,7 +34,7 @@ const ArticleCard = (props) => {
         <p><AccountCircleIcon/> <Link  to={`/users/${article.author}`}>{article.author}</Link> </p>
         <p>comments: {article.comment_count}</p> 
         <p>{article.topic}</p> 
-        <p>{article.created_at}</p>
+        <p>{dateToTimeString(article.created_at)}</p>
        
         </div>
     </li>  )

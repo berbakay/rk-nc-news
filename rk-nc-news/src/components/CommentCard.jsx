@@ -4,6 +4,7 @@ import { deleteComments, patchComment } from '../apiRequests';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { dateToTimeString } from '../utils/utils';
 
 const CommentCard = (props) => {
     const comment = props.commentInfo;
@@ -25,7 +26,7 @@ const CommentCard = (props) => {
 
     return (<li>
         <p className="commentAuthor"><Link to={`/users/${comment.author}`}><AccountCircleIcon/>{comment.author}</Link></p>
-        <p>{comment.created_at}</p>
+        <p>{dateToTimeString(comment.created_at)}</p>
         <p>votes: {comment.votes}</p>
         <p className="commentBody">{comment.body}</p>
         <div className="articleInfoButtons">

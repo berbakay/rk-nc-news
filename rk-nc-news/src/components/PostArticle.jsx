@@ -7,7 +7,7 @@ const PostArticle = (props) => {
                 <label>Body</label>
                 <input label="body" onChange={props.changeBody}></input>
                 <label>Select Topic</label>
-                <select defaultValue="topic" onChange={props.changeTopic}>
+                <select defaultValue={props.slug} onChange={props.changeTopic}>
                     <option value="topic" disabled="diabled">Select Topic</option>
                     {props.topics.map(topic => {
                     return (<option key={topic.slug} value={topic.slug}>{topic.slug}</option>)

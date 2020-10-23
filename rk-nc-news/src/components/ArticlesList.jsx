@@ -172,7 +172,7 @@ class ArticlesList extends React.Component {
             {this.props.username ? <button onClick={this.toggleHide}>{this.state.showArticles ? "Hide" : "Show"}</button> : null}
             {this.state.showArticles && <div>
             <button className="postAnArticle" onClick= {() => {this.setState({postArticle: !this.state.postArticle})}}>Post Article</button>
-            {this.state.postArticle && <PostArticle submitForm={this.submitForm} changeTitle={this.changeTitle} changeBody={this.changeBody} changeTopc={this.changeTopic} topics={this.state.topics}/>}
+            {this.state.postArticle && <PostArticle slug={this.props.topicFilter} submitForm={this.submitForm} changeTitle={this.changeTitle} changeBody={this.changeBody} changeTopc={this.changeTopic} topics={this.state.topics}/>}
             <div className="sortButtons">
             <button onClick={() => this.toggleSort('votes')}><HowToVoteIcon/>{this.state.sortQuery === 'votes' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
             <button onClick={() => this.toggleSort('created_at')}><CalendarTodayIcon/> {this.state.sortQuery === 'created_at' ? this.state.sortOrder === 'asc' ? <p>▲</p> : <p>▼</p> : null}</button>
