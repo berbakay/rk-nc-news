@@ -3,7 +3,7 @@ import { navigate } from '@reach/router';
 import LoadingPage from './LoadingPage';
 import { getTopics } from '../apiRequests';
 import CreateTopic from './CreateTopic';
-
+import {Select, MenuItem} from '@material-ui/core'
 
 class SelectTopic extends React.Component {
     state = {
@@ -38,19 +38,18 @@ class SelectTopic extends React.Component {
         })
     }
 
+
     render () {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
             <div className="selectTopic">
-            <label>Select Topic: </label>
-        <select value={this.props.topic} onChange={this.handleTopicChange}>
-            <optgroup label="Select Topic">
-            <option key="blank" value='all'>All</option>
+        <Select value={this.props.topic}  onChange={this.handleTopicChange} displayEmpty>
+            <MenuItem disabled>Select Topic</MenuItem>
+            <MenuItem value="all">All</MenuItem>
             {this.state.topics.map(topic => {
-                return (<option key={topic.slug} value={topic.slug}>{topic.slug}</option>)
+                return (<MenuItem key={topic.slug} value={topic.slug}>{topic.slug}</MenuItem>)
             })}
-            </optgroup>
-        </select>
+        </Select>
         <CreateTopic updateTopics={this.updateTopics}/>
         </div>
         )

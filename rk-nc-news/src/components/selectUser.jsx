@@ -1,13 +1,14 @@
 import React from 'react';
 import LoadingPage from './LoadingPage';
 import { getUsers } from '../apiRequests';
-import CreateUser from './CreateUser'
+import CreateUser from './CreateUser';
+import {Select, MenuItem} from '@material-ui/core'
 
 
 class SelectUser extends React.Component {
     state = {
         users: [], 
-        user:'', 
+        user:'tickle122', 
         isLoading: true};
 
     componentDidMount() {
@@ -34,12 +35,12 @@ class SelectUser extends React.Component {
         if(this.state.isLoading) return(<LoadingPage />)
         else return(
             <div className="selectUser">
-            <label>Select User: </label>
-        <select value={this.state.user} onChange={this.handleUserChange}>
+        <Select value={this.state.user}  onChange={this.handleUserChange} displayEmpty>
+            <MenuItem disabled>Select User</MenuItem>
             {this.state.users.map(user => {
-                return (<option  key={user.username} value={user.username}>{user.username}</option>)
+                return (<MenuItem key={user.username} value={user.username}>{user.username}</MenuItem>)
             })}
-        </select>
+        </Select>
         <CreateUser updateUsers={this.updateUsers}/>
         </div>
         )
