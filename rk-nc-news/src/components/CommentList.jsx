@@ -1,7 +1,7 @@
 import React from 'react'
 import LoadingPage from './LoadingPage'
 import { getArticleComments, postComment } from '../apiRequests'
-import CommentCard from './CommentCard'
+import CommentCard from './CommentCard';
 
 class CommentList extends React.Component {
     state = {
@@ -105,9 +105,8 @@ class CommentList extends React.Component {
         <div>
             <button onClick={this.toggleHide}>{this.state.showComments ? "Hide" : "Show"}</button>
             {this.state.showComments && <div>
-                <form onSubmit={this.handleSubmit}>
-                    <label>Msg:</label>
-                    <input onChange={this.handleMsgChange}></input>
+                <form className="submitCommentForm" onSubmit={this.handleSubmit}>
+                    <input placeholder="enter comment" onChange={this.handleMsgChange}></input>
                     <button>submit</button>
                 </form>
                 <label>Sort By: </label>

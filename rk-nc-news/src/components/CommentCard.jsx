@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from '@reach/router'
 import { deleteComments, patchComment } from '../apiRequests';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const CommentCard = (props) => {
     const comment = props.commentInfo;
@@ -21,12 +24,17 @@ const CommentCard = (props) => {
     }
 
     return (<li>
-        <p className="makeItBold"><Link to={`/users/${comment.author}`}>{comment.author}</Link></p>
-        <p><span className="makeItBold">posted:</span> {comment.created_at}</p>
-        <p><span className="makeItBold">votes:</span> {comment.votes}</p>
+        <p className="commentAuthor"><Link to={`/users/${comment.author}`}><AccountCircleIcon/>{comment.author}</Link></p>
+        <p>{comment.created_at}</p>
+        <p>votes: {comment.votes}</p>
         <p className="commentBody">{comment.body}</p>
-        <button onClick={() => handleVote(1)}>Upvote</button><button onClick={() => handleVote(-1)}>Downvote</button>
-        <button onClick={handleDelete}>Delete</button>
+        <div className="articleInfoButtons">
+            <div className="voteButtons">
+        <button onClick={() => handleVote(1)}><ArrowUpwardIcon/></button>
+        <button onClick={() => handleVote(-1)}><ArrowDownwardIcon/></button>
+        </div>
+        <button onClick={handleDelete}>del</button>
+        </div>
     </li>)
 }
 

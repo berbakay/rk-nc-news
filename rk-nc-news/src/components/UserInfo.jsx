@@ -21,7 +21,9 @@ class UserInfo extends React.Component {
         <div>
             <h2>{this.state.userInfo.username}</h2>
             <p>name: {this.state.userInfo.name}</p>
+            <div className="picArea">
             <img src={this.state.userInfo.avatar_url} alt="user avatar"></img>
+            </div>
         </div>)
     }
 }

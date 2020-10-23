@@ -2,6 +2,8 @@ import React from 'react';
 import LoadingPage from './LoadingPage';
 import { getArticles, getArticlesbyAuthor, getArticlesbyTopic, getTopics, postArticle } from '../apiRequests';
 import ArticleCard from './ArticleCard';
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 class ArticlesList extends React.Component {
     state = {
@@ -168,12 +170,9 @@ class ArticlesList extends React.Component {
             <div>
             {this.props.username ? <button onClick={this.toggleHide}>{this.state.showArticles ? "Hide" : "Show"}</button> : null}
             {this.state.showArticles && <div>
-                <label>Sort By: </label>
-            <button onClick={() => this.toggleSort('votes')}>Votes{this.state.sortQuery === 'votes' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
-            <button onClick={() => this.toggleSort('created_at')}>Date Posted {this.state.sortQuery === 'created_at' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
-            <button onClick= {() => {this.setState({postArticle: !this.state.postArticle})}}>Post An Article</button>
+            <button className="postAnArticle" onClick= {() => {this.setState({postArticle: !this.state.postArticle})}}>Post Article</button>
             {this.state.postArticle && 
-            <form onSubmit={this.submitForm}>
+            <form className="postArticleForm" onSubmit={this.submitForm}>
                 <label>Title</label>
                 <input label="title" onChange={this.changeTitle}></input>
                 <label>Body</label>
@@ -185,14 +184,18 @@ class ArticlesList extends React.Component {
                     return (<option key={topic.slug} value={topic.slug}>{topic.slug}</option>)
                     })}
                 </select>
-            <button>Submit</button>
+            <button className="submitArticle">Submit</button>
             </form>}
+            <div className="sortButtons">
+            <button onClick={() => this.toggleSort('votes')}><HowToVoteIcon/>{this.state.sortQuery === 'votes' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
+            <button onClick={() => this.toggleSort('created_at')}><CalendarTodayIcon/> {this.state.sortQuery === 'created_at' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
+            </div>
             {this.state.articles.length ? <ul id="articleList">
             {this.state.articles.map(article => {
                return <ArticleCard changeArticleVote={this.changeArticleVote} key={article.article_id} articleInfo={article} changeIsLoading={this.changeIsLoading}/> 
             })}
             </ul> : <p>No articles found. Post an article or create topic</p>}
-            <button onClick={() => {this.changePage(-1)}}>-</button>{this.state.page}<button onClick={() =>{ this.changePage(1)}}>+</button>
+            <button className="changePage" onClick={() => {this.changePage(-1)}}>-</button>{this.state.page}<button className="changePage" onClick={() =>{ this.changePage(1)}}>+</button>
             </div>}
             </div>
         )

@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from '@reach/router'
-import { patchArticle } from '../apiRequests'
+import { patchArticle } from '../apiRequests';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 const ArticleCard = (props) => {
     const article = props.articleInfo
@@ -16,17 +18,23 @@ const ArticleCard = (props) => {
     return (
     
     <li>
+        <div className="articleCardButtons">
+        <button onClick={() => handleVote(1)}><ArrowUpwardIcon/></button>
+        <p>{article.votes}</p>
+        <button onClick={() => handleVote(-1)}><ArrowDownwardIcon/></button>
+        </div>
+        <div className="articleInformation">
         <h2 className="articleTitle">
             <Link  to={`/articles/${article.article_id}`}>
                 {article.title}
             </Link>
         </h2>
-        <p><span className='makeItBold'>topic:</span> {article.topic} <span className='makeItBold'>author:</span> <Link  to={`/users/${article.author}`}>
-            {article.author}
-        </Link> <span className='makeItBold'>Posted:</span> {article.created_at}</p>
-        <p><span className='makeItBold'>Comments: </span> {article.comment_count}</p>
-        <p><span className='makeItBold'>Votes: </span> {article.votes}</p>
-        <button onClick={() => handleVote(1)}>Upvote</button><button onClick={() => handleVote(-1)}>Downvote</button>
+        <p>author: <Link  to={`/users/${article.author}`}>{article.author}</Link> </p>
+        <p>comments: {article.comment_count}</p> 
+        <p>{article.topic}</p> 
+        <p>{article.created_at}</p>
+       
+        </div>
     </li>  )
 }
 
