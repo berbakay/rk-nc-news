@@ -212,7 +212,14 @@ select {
 }
 
 .voteButtons {
+  margin: 0;
+  margin-left: 10px;
   text-align: left;
+}
+
+.voteTracker {
+  margin: 0;
+  font-weight: normal;
 }
 
 .changePage {
@@ -244,10 +251,13 @@ select {
 
 .articleInfo p {
   text-align: left;
-  margin: 0;
   font-size: 1rem;
   color: black;
+}
+
+.articleAuthor {
   margin-left: 10px;
+  margin-bottom: 0;
 }
 
 .articleInfo p a:link {
@@ -296,6 +306,11 @@ select {
 
 .commentList li p {
   margin: 2px;
+  margin-left: 10px;
+}
+
+.commentList li .voteButtons p {
+  margin-left: 0;
 }
 
 .commentBody {

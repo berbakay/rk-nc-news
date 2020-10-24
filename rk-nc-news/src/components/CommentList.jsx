@@ -8,7 +8,7 @@ class CommentList extends React.Component {
         comments: [],
         comment_count: 0,
         isLoading: true,
-        showComments: false,
+        showComments: true,
         sortQuery: 'created_at',
         sortOrder: 'desc',
         commentToPost: {username: this.props.author, body: null},

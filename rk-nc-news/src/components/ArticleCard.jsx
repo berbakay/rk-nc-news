@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from '@reach/router'
-import { patchArticle } from '../apiRequests';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { dateToTimeString } from '../utils/utils';
-import VoteComponent from './VoteComponent';
+import ArticleListVoteComponent from './ArticleListVoteComponent';
 
 const ArticleCard = (props) => {
     const article = props.articleInfo
@@ -12,7 +11,7 @@ const ArticleCard = (props) => {
     <li>
        
         
-        <VoteComponent article_id={article.article_id} votes={article.votes}/>
+        <ArticleListVoteComponent article_id={article.article_id} votes={article.votes}/>
         <div className="articleInformation">
         <h2 className="articleTitle">
             <Link  to={`/articles/${article.article_id}`}>

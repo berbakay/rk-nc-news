@@ -2,9 +2,8 @@ import React from 'react'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { patchArticle } from '../apiRequests';
-import LoadingPage from './LoadingPage';
 
-class VoteComponent extends React.Component {
+class ArticleListVoteComponent extends React.Component {
     state = {
         votes: 0,
         isLoading: true
@@ -30,4 +29,4 @@ class VoteComponent extends React.Component {
     )}
 }
 
-export default VoteComponent
+export default ArticleListVoteComponent
