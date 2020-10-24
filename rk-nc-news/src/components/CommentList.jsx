@@ -21,6 +21,9 @@ class CommentList extends React.Component {
         .then(res => {
             this.setState({isLoading: false, comments: res.data.comments})
         })
+        .catch(err => {
+            this.setState({isLoading: false, code: err.response.status, msg: err.response.statusText})
+        })
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -100,6 +103,7 @@ class CommentList extends React.Component {
     }
 
     render() {
+        if(this.state.err) return(<p>article not found</p>)
         if(this.state.isLoading) return(<LoadingPage/>)
         else return(
         <div>

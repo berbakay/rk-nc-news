@@ -17,7 +17,7 @@ class ArticlesList extends React.Component {
         sortOrder: 'desc',
         postArticle: false,
         topics:[],
-        articleToPost: {title: null, body: null, topic: null, author: this.props.author},
+        articleToPost: {title: null, body: null, topic: this.props.topicFilter, author: this.props.author},
         err: null,
         page: 1
     }
@@ -145,6 +145,7 @@ class ArticlesList extends React.Component {
 
     changeTopic = (event) => {
         const newTopic = event.target.value;
+        console.log(newTopic);
         this.setState(() => {
             const newArticle = {...this.state.articleToPost}
             newArticle.topic = newTopic;
@@ -167,12 +168,13 @@ class ArticlesList extends React.Component {
 
     render() {
         if(this.state.isLoading) return(<LoadingPage />)
+        if(this.state.error) return(<p>No Page found</p>)
         else return(
             <div>
             {this.props.username ? <button onClick={this.toggleHide}>{this.state.showArticles ? "Hide" : "Show"}</button> : null}
             {this.state.showArticles && <div>
             <button className="postAnArticle" onClick= {() => {this.setState({postArticle: !this.state.postArticle})}}>Post Article</button>
-            {this.state.postArticle && <PostArticle slug={this.props.topicFilter} submitForm={this.submitForm} changeTitle={this.changeTitle} changeBody={this.changeBody} changeTopc={this.changeTopic} topics={this.state.topics}/>}
+            {this.state.postArticle && <PostArticle slug={this.props.topicFilter} submitForm={this.submitForm} changeTitle={this.changeTitle} changeBody={this.changeBody} changeTopic={this.changeTopic} topics={this.state.topics}/>}
             <div className="sortButtons">
             <button onClick={() => this.toggleSort('votes')}><HowToVoteIcon/>{this.state.sortQuery === 'votes' ? this.state.sortOrder === 'asc' ? '▲' : '▼' : null}</button>
             <button onClick={() => this.toggleSort('created_at')}><CalendarTodayIcon/> {this.state.sortQuery === 'created_at' ? this.state.sortOrder === 'asc' ? <p>▲</p> : <p>▼</p> : null}</button>

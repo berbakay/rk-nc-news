@@ -12,12 +12,16 @@ class ArticleInfo extends React.Component {
     state = {
         articleInfo: {},
         isLoading: true,
+        err: null
     }
 
     componentDidMount() {
        getArticleById(this.props.article_id)
        .then(res => {
             this.setState({isLoading: false, articleInfo: res.data.article[0]})
+        })
+        .catch(err => {
+            this.setState({err: {code: err.response.status, msg: err.response.statusText, isLoading: false}})
         })
     }
 
@@ -28,9 +32,8 @@ class ArticleInfo extends React.Component {
                 const newArticleInfo = {...this.state.articleInfo};
                 newArticleInfo.votes = this.state.articleInfo.votes + incrementVote;
                 this.setState({articleInfo: newArticleInfo, isLoading: false})
-            }) 
+            })
         })
-        
     }
 
     handleDelete = () => {
@@ -41,6 +44,7 @@ class ArticleInfo extends React.Component {
     }
 
     render() {
+        if(this.state.err) return(<p>article not found</p>)
         if(this.state.isLoading) return(<LoadingPage/>)
         else if(!this.state.articleInfo) return(<p>article not found</p>)
         else return (<div className="articleInfo">

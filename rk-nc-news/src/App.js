@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Topic from './components/Topic';
 import ArticlePage from './components/ArticlePage';
 import UserPage from './components/UserPage';
+import Default from './components/Default'
 
 class App extends React.Component {
 
@@ -30,6 +31,7 @@ class App extends React.Component {
         <Topic author={this.state.currentUser} path='/topics/:topic_slug' changeTopic={this.changeTopic}/>
         <ArticlePage author={this.state.currentUser} path='/articles/:article_id'/>
         <UserPage path='/users/:username'/>
+        <Default path='/*'/>
       </Router>
     </div>
   );
