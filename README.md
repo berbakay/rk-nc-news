@@ -1,7 +1,9 @@
-# **rk-nc-news - React App** | [Live Host](https://rico-fake-news.netlify.app/) 👀
+**rk-nc-news - React App**
 
+**Live Host**<br>
+<https://5f9d86b9b2565aacefd7b170--rk-nc-news.netlify.app>
 
-##About
+**About**<br>
 rk-nc-news is a Reddit Clone built using React. The data is pulled from a custom built api hosted here:
 
 https://nc-news-2-electric-boogaloo.herokuapp.com/api
