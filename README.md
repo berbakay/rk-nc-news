@@ -28,7 +28,7 @@ GET /api/users/:username
 
 ## How to install
 
-`git clone https://github.com/rico157/rico-fake-news.git`
+`git clone https://github.com/berbakay/rk-nc-news`
 
 Clone the repository from github to your project folder
 
